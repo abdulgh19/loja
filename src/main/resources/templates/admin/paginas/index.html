@@ -5,19 +5,43 @@
 
 <body>
 
-<nav th:replace="/fragments/nav :: nav-admin"></nav>
+	<nav th:replace="/fragments/nav :: nav-admin"></nav>
 
 
-<div class="container">
-	<div class="row">
-		<div class="col">
-			<h1>Paginas de Admin</h1>
+	<div class="container">
+
+		<h1 class="display-2">Paginas</h1>
+		<a href="/admin/paginas/adicionar" class="btn btn-primary mb-5">Adicionar
+			nova</a>
+
+		<div th:if="${!paginas.empty}">
+
+			<table class="table">
+				<tr>
+					<th>Titulo</th>
+					<th>Slug</th>
+					<th>Actualizar</th>
+					<th>Apagar</th>
+				</tr>
+				<tr th:each="pagina: ${paginas}">
+					<td th:text="${pagina.titulo}" ></td>
+					<td th:text="${pagina.slug}" ></td>
+					<td ><a th:href="@{'/admin/paginas/actualizar/' + ${pagina.id}}" >Actualizar</a></td>
+					<td ><a th:href="@{'/admin/paginas/apagar/' + ${pagina.id}}" >Apagar</a></td>
+				</tr>
+
+
+			</table>
+
+
 		</div>
 
+		<div th:unless="${!paginas.empty}">
+			<p>Nao ha paginas</p>
+		</div>
+
+
 	</div>
-</div>
 
-<div th:replace="/fragments/footer"></div>
-
-
+	<div th:replace="/fragments/footer"></div>
 </html>
