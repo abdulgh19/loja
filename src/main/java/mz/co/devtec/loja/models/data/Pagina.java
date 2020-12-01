@@ -18,7 +18,7 @@ public class Pagina {
 	
 	private String slug;
 	
-	private String context;
+	private String conteudo;
 	
 	private int sorting;
 
@@ -46,12 +46,12 @@ public class Pagina {
 		this.slug = slug;
 	}
 
-	public String getContext() {
-		return context;
+	public String getConteudo() {
+		return conteudo;
 	}
 
-	public void setContext(String context) {
-		this.context = context;
+	public void setConteudo(String context) {
+		this.conteudo = context;
 	}
 
 	public int getSorting() {
