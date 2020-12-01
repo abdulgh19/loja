@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "pagina")
@@ -14,10 +15,12 @@ public class Pagina {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@Size(min = 3, max = 25, message = "O titulo deve ter entre {min} e {max} caracteres")
 	private String titulo;
 	
 	private String slug;
 	
+	@Size(min = 3, max = 205, message = "O conteudo deve ter entre {min} e {max} caracteres")
 	private String conteudo;
 	
 	private int sorting;
