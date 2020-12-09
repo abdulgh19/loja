@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mz.co.devtec.loja.models.data.Pagina;
@@ -28,7 +30,7 @@ public class PaginaAdminController {
 	@GetMapping
 	public String index(Model model) {
 		
-		List<Pagina> paginas = paginaRepository.findAll();
+		List<Pagina> paginas = paginaRepository.findAllByOrderBySortingAsc();
 		
 		model.addAttribute("paginas",paginas);
 		
@@ -126,6 +128,22 @@ public class PaginaAdminController {
 		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 				
 		return "redirect:/admin/paginas";
+	}
+	
+	@PostMapping("/reorder")
+	public @ResponseBody String reorder(@RequestParam("id[]") int[] id) {
+		
+		int count = 1;
+		Pagina pagina;
+		
+		for (int idPagina : id) {
+			pagina = paginaRepository.getOne(idPagina);
+			pagina.setSorting(count);
+			paginaRepository.save(pagina);
+			count++;
+			
+		}
+		return "ok";
 	}
 	
 	

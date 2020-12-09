@@ -19,14 +19,14 @@
 
 		<div th:if="${!paginas.empty}">
 
-			<table class="table">
-				<tr>
+			<table class="table sorting" id="paginas">
+				<tr class="home">
 					<th>Titulo</th>
 					<th>Slug</th>
 					<th>Actualizar</th>
 					<th>Remover</th>
 				</tr>
-				<tr th:each="pagina: ${paginas}">
+				<tr th:each="pagina: ${paginas}" th:id="'id_' + ${pagina.id}" th:class="${pagina.slug}">
 					<td th:text="${pagina.titulo}" ></td>
 					<td th:text="${pagina.slug}" ></td>
 					<td ><a th:href="@{'/admin/paginas/actualizar/' + ${pagina.id}}" >Actualizar</a></td>
@@ -46,4 +46,24 @@
 	</div>
 
 	<div th:replace="/fragments/footer"></div>
+	
+	<script >
+		$("table#paginas tbody").sortable({
+			items: "tr:not(.home)",
+			placeholder: "ui-state-highlight",
+			update: function(){
+				let ids = $("table#paginas tbody").sortable("serialize");
+				let url = "/admin/paginas/reorder";
+				
+				$.post(url, ids, function (data){
+					console.log(data);
+				});
+			}
+			
+		});	
+	
+	</script>
+	
+	</body>
+	
 </html>
