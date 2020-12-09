@@ -117,6 +117,17 @@ public class PaginaAdminController {
 		return "redirect:/admin/paginas/actualizar/" + pagina.getId();
 	}
 	
+	@GetMapping("/remover/{id}")
+	public String remover(@PathVariable int id, RedirectAttributes redirectAttributes) {
+		
+		paginaRepository.deleteById(id);
+		
+		redirectAttributes.addFlashAttribute("message", "Pagina removida com Sucesso");
+		redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+				
+		return "redirect:/admin/paginas";
+	}
+	
 	
 
 }

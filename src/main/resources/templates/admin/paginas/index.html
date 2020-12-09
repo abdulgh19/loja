@@ -13,6 +13,9 @@
 		<h1 class="display-2">Paginas registadas</h1>
 		<a href="/admin/paginas/adicionar" class="btn btn-primary mb-3 mt-3">Adicionar
 			nova</a>
+			
+		<div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></div>
+			
 
 		<div th:if="${!paginas.empty}">
 
@@ -21,15 +24,14 @@
 					<th>Titulo</th>
 					<th>Slug</th>
 					<th>Actualizar</th>
-					<th>Apagar</th>
+					<th>Remover</th>
 				</tr>
 				<tr th:each="pagina: ${paginas}">
 					<td th:text="${pagina.titulo}" ></td>
 					<td th:text="${pagina.slug}" ></td>
 					<td ><a th:href="@{'/admin/paginas/actualizar/' + ${pagina.id}}" >Actualizar</a></td>
-					<td ><a th:href="@{'/admin/paginas/apagar/' + ${pagina.id}}" >Apagar</a></td>
+					<td ><a th:if="${pagina.slug != 'home'}" th:href="@{'/admin/paginas/remover/' + ${pagina.id}}" class="confirmarRemocao">Remover</a></td>
 				</tr>
-
 
 			</table>
 
