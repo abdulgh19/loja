@@ -1,0 +1,67 @@
+
+<!doctype html>
+<html lang="en">
+<head th:replace="/fragments/head :: cabecalho"></head>
+
+<body>
+
+	<nav th:replace="/fragments/nav :: nav-admin"></nav>
+
+
+	<div class="container">
+
+		<h1 class="display-2">Categorias registadas</h1>
+		<a href="/admin/categorias/adicionar" class="btn btn-primary mb-3 mt-3">Adicionar
+			nova</a>
+			
+		<div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></div>
+			
+
+		<div th:if="${!categorias.empty}">
+
+			<table class="table sorting" id="categorias">
+				<tr class="home">
+					<th>Nome</th>
+					<th>Actualizar</th>
+					<th>Remover</th>
+				</tr>
+				<tr th:each="categoria: ${categorias}" th:id="'id_' + ${categoria.id}">
+					<td th:text="${categoria.nome}" ></td>
+					<td ><a th:href="@{'/admin/categorias/actualizar/' + ${categoria.id}}" >Actualizar</a></td>
+					<td ><a th:href="@{'/admin/categorias/remover/' + ${categoria.id}}" class="confirmarRemocao">Remover</a></td>
+				</tr>
+
+			</table>
+
+
+		</div>
+
+		<div th:unless="${!categorias.empty}">
+			<p>Nao ha categorias</p>
+		</div>
+
+
+	</div>
+
+	<div th:replace="/fragments/footer"></div>
+	
+	<script >
+		$("table#categorias tbody").sortable({
+			items: "tr:not(.home)",
+			placeholder: "ui-state-highlight",
+			update: function(){
+				let ids = $("table#categorias tbody").sortable("serialize");
+				let url = "/admin/categorias/reorder";
+				
+				$.post(url, ids, function (data){
+					console.log(data);
+				});
+			}
+			
+		});	
+	
+	</script>
+	
+	</body>
+	
+</html>
